@@ -1,0 +1,13 @@
+simpledbf
+pandas
+bs4
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+pyzipper
+tables
+psycopg2==2.9.10
+sqlalchemy
+fastapi
+uvicorn
