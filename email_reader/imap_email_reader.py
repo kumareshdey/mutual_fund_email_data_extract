@@ -141,7 +141,7 @@ def save_dataframe_to_db(df, model_class):
         ]
 
         for record in records:
-            repository.add(record)
+            repository.add_or_update(record)
         
         log.info(f"Successfully saved {len(records)} records to the {model_class.__tablename__} table.")
 
