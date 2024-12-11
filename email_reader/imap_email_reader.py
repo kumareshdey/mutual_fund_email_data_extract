@@ -155,7 +155,6 @@ def process_cams_data(soup: BeautifulSoup):
     report_no = soup.find_all('tr')[9].find_all('td')[1].get_text(strip=True)
     if report_no == "WBR2":
         df = process_zip_file(url, password='123456')
-        df.to_excel('test.xlsx', index=False)
         column_names = [column.name for column in CamsWBR2.__table__.columns]
         df = df[column_names]
         log.info("Saving Cams WBR2 entries ...")
