@@ -4,7 +4,7 @@ from setup import log
 
 DATABASE_URL = "postgresql+psycopg2://postgres:kumaresh@localhost:5433/spiderman"
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

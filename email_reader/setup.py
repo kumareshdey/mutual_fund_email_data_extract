@@ -32,23 +32,23 @@ def configure_get_log():
                     "propagate": False,
                 },
                 "sqlalchemy": {  # Disable SQLAlchemy logs explicitly here
-                    "level": logging.CRITICAL,
+                    "level": logging.ERROR,
                     "handlers": ["console"],
                 },
                 "sqlalchemy.engine": {  # Disable engine logs explicitly here
-                    "level": logging.CRITICAL,
+                    "level": logging.ERROR,
                     "handlers": ["console"],
                 },
                 "sqlalchemy.orm": {  # Disable ORM logs explicitly here
-                    "level": logging.CRITICAL,
+                    "level": logging.ERROR,
                     "handlers": ["console"],
                 },
                 "sqlalchemy.dialects": {  # Disable dialect logs explicitly here
-                    "level": logging.CRITICAL,
+                    "level": logging.ERROR,
                     "handlers": ["console"],
                 },
                 "psycopg2": {  # Disable psycopg2 logs explicitly here
-                    "level": logging.CRITICAL,
+                    "level": logging.ERROR,
                     "handlers": ["console"],
                 },
             },
