@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import create_engine
 from db_connection import SessionLocal
 from setup import log
-
+from mapper import COLUMN_MAPPING
 class GenericRepository:
     """
     A generic repository class for interacting with SQLAlchemy ORM models.
@@ -79,12 +79,13 @@ class GenericRepository:
             filters: Keyword arguments representing the filter criteria.
         """
         session = self.Session()
-        _filters = {}
-        for key, value in filters.items():
-            if value is not None:
-                _filters[getattr(model_class, key)] = value
         try:
-            return session.query(model_class).filter_by(**_filters).all()
+            query = session.query(model_class)
+            for key, value in filters.items():
+                if value is not None:
+                    column_attr = getattr(model_class, key)  # Get the column attribute
+                    query = query.filter(column_attr == value)  # Add a filter condition
+            return query.all()
         except SQLAlchemyError as e:
             log.error(f"Error filtering records: {e}")
             return []
@@ -136,7 +137,7 @@ def sqlalchemy_to_dict(obj: Any) -> dict:
     if isinstance(obj.__class__, DeclarativeMeta):
         columns = class_mapper(obj.__class__).columns
         return {
-            column.key: _serialize_value(getattr(obj, column.key))
+            COLUMN_MAPPING[column.key]: _serialize_value(getattr(obj, column.key))
             for column in columns
         }
     elif isinstance(obj, list):  # Handles lists of model instances

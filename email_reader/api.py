@@ -14,9 +14,9 @@ def authenticate(credentials: HTTPBasicCredentials):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
 @app.get("/user_data")
-def user_data(pan_no: str = None, folio_no: str = None, credentials: HTTPBasicCredentials = Depends(security)):
+def user_data(pan_no: str = None, credentials: HTTPBasicCredentials = Depends(security)):
     authenticate(credentials)
-    return get_user_data(pan_no=pan_no, folio_no=folio_no)
+    return get_user_data(pan_no=pan_no)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

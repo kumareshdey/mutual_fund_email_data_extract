@@ -25,7 +25,7 @@ class CamsWBR2(Base):
     TRXNNO = Column(String, nullable=True, primary_key=True, unique=True)
     USRTRXNO = Column(String, nullable=True,)
     TRXN_NATUR = Column(String, nullable=True)
-    TRXN_TYPE_ = Column(String, nullable=True)
+    TRXNTYPE = Column(String, nullable=True)
     TRXN_SUFFI = Column(String, nullable=True)
     SEQ_NO = Column(BigInteger, nullable=True)
     SIPTRXNNO = Column(String, nullable=True)
@@ -42,6 +42,7 @@ class CamsWBR9(Base):
     __tablename__ = "CAMS_WBR9"
 
     FOLIOCHK = Column(String, nullable=False, primary_key=True, unique=True)
+    PAN_NO = Column(String, nullable=False)
     HOLDING_NA = Column(String, nullable=True)
     CLOS_BAL = Column(Numeric, nullable=True)
     RUPEE_BAL = Column(Numeric, nullable=True)
@@ -53,6 +54,3 @@ class CamsWBR9(Base):
         lazy="selectin",
         primaryjoin="CamsWBR9.FOLIOCHK == CamsWBR2.FOLIO_NO",
     )
-
-if __name__ == '__main__':
-    Base.metadata.create_all(bind=engine)

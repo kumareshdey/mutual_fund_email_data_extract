@@ -178,7 +178,7 @@ def process_karvy_data(soup: BeautifulSoup):
 def task():
     mail = authenticate_imap()
     end_date = datetime.now()
-    start_date = end_date - timedelta(hours=74)
+    start_date = end_date - timedelta(hours=72)
     sender_emails = ["donotreply@camsonline.com", "distributorcare@kfintech.com"]
     for i, sender_email in enumerate(sender_emails):
         messages = search_emails_imap(mail, sender_email, start_date, end_date)
