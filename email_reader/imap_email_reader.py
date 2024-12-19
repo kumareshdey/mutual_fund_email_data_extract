@@ -56,6 +56,7 @@ def search_emails_imap(mail, sender_emails, start_date, end_date):
         # Check if any sender email is in the content
         if any(sender_email.lower() in email_content for sender_email in sender_emails):
             matching_emails.append(msg_id)
+        
     
     return matching_emails
 
