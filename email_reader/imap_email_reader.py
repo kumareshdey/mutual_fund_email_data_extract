@@ -1,6 +1,7 @@
 import imaplib
 import email
 from email.header import decode_header
+import re
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -56,7 +57,6 @@ def search_emails_imap(mail, sender_emails, start_date, end_date):
         # Check if any sender email is in the content
         if any(sender_email.lower() in email_content for sender_email in sender_emails):
             matching_emails.append(msg_id)
-        
     
     return matching_emails
 
@@ -179,14 +179,21 @@ def process_karvy_data(soup: BeautifulSoup):
 def task():
     mail = authenticate_imap()
     end_date = datetime.now()
-    start_date = end_date - timedelta(hours=72)
+    start_date = end_date - timedelta(hours=740)
     sender_emails = ["donotreply@camsonline.com", "distributorcare@kfintech.com"]
     for i, sender_email in enumerate(sender_emails):
+        email_contents = []
         messages = search_emails_imap(mail, sender_email, start_date, end_date)
         for msg_id in messages:
             email_content = get_email_content_imap(mail, msg_id)
-            if not email_content:
-                continue
+            if email_content:  # Only add non-empty results
+                email_contents.append(email_content)
+        if i == 0:
+            sorted_email_contents = sorted(
+                email_contents,
+                key=lambda x: (not bool(re.search(r"wbr9", x["subject"], re.IGNORECASE)), x["subject"])
+            )
+        for email_content in sorted_email_contents:
             log.info(f"Processing email: {email_content['subject']}. Sent: {email_content['from']}.")
             body = email_content['body']
             soup = BeautifulSoup(body, 'html.parser')
