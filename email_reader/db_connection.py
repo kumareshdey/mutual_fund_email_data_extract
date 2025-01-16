@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from setup import log
-
-DATABASE_URL = "postgresql+psycopg2://postgres:kumaresh@localhost:5433/spiderman"
+from credentials import DB_PORT
+DATABASE_URL = f"postgresql+psycopg2://postgres:kumaresh@localhost:{DB_PORT}/spiderman"
 
 engine = create_engine(DATABASE_URL, echo=False)
 

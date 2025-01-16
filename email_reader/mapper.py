@@ -30,6 +30,7 @@ COLUMN_MAPPING = {
     'TRXN_SUFFI': 'Transaction Suffix',
     'SEQ_NO': 'Sequence Number',
     'SIPTRXNNO': 'SIP Transaction Number',
-    'SYS_REGN_D': 'System Registration Date'
+    'SYS_REGN_D': 'System Registration Date',
+    'SCH_NAME': 'Scheme Name'
 } 
 

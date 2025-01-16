@@ -179,8 +179,8 @@ def process_karvy_data(soup: BeautifulSoup):
 def task():
     mail = authenticate_imap()
     end_date = datetime.now()
-    start_date = end_date - timedelta(hours=740)
-    sender_emails = ["donotreply@camsonline.com", "distributorcare@kfintech.com"]
+    start_date = end_date - timedelta(hours=24)
+    sender_emails = ["donotreply@camsonline.com"]#, "distributorcare@kfintech.com"] # TODO: add back this when ready
     for i, sender_email in enumerate(sender_emails):
         email_contents = []
         messages = search_emails_imap(mail, sender_email, start_date, end_date)
@@ -188,7 +188,7 @@ def task():
             email_content = get_email_content_imap(mail, msg_id)
             if email_content:  # Only add non-empty results
                 email_contents.append(email_content)
-        if i == 0:
+        if i == 0: # this sorting is only for cams data
             sorted_email_contents = sorted(
                 email_contents,
                 key=lambda x: (not bool(re.search(r"wbr9", x["subject"], re.IGNORECASE)), x["subject"])
