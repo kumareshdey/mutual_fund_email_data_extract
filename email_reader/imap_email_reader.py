@@ -153,7 +153,7 @@ def save_dataframe_to_db(df, model_class):
 
 def process_cams_data(soup: BeautifulSoup):
     url = soup.find_all('td')[3].a['href']
-    report_no = soup.find_all('tr')[9].find_all('td')[1].get_text(strip=True)
+    report_no = next((tr.find_all('td')[1].get_text(strip=True) for tr in soup.find_all('tr') if tr.find('td') and tr.find('td').get_text(strip=True).lower().startswith("report no")), None)
     if report_no == "WBR2":
         df = process_zip_file(url, password='123456')
         column_names = [column.name for column in CamsWBR2.__table__.columns]
@@ -178,8 +178,8 @@ def process_karvy_data(soup: BeautifulSoup):
 
 def task():
     mail = authenticate_imap()
-    end_date = datetime.now()
-    start_date = end_date - timedelta(hours=24)
+    end_date = datetime.now() + timedelta(hours=24)
+    start_date = end_date - timedelta(hours=48)
     sender_emails = ["donotreply@camsonline.com"]#, "distributorcare@kfintech.com"] # TODO: add back this when ready
     for i, sender_email in enumerate(sender_emails):
         email_contents = []
